@@ -1,77 +1,57 @@
 import { useThree } from "@react-three/fiber";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
+import { ScrollTrigger } from "gsap/all";
+import { useNavigate } from "react-router-dom";
 
-const CameraAnimation = () => {
-    const { camera } = useThree();
-    const cameraRef = useRef(camera);
+const CameraAnimation = ({ scrollContainer }) => {
+  const { camera } = useThree();
+  const cameraRef = useRef(camera);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        // Log initial camera position and rotation
-        console.log("Initial Camera Position:", cameraRef.current.position);
-        console.log("Initial Camera Rotation:", cameraRef.current.rotation);
+  useEffect(() => {
+    if (!scrollContainer?.current) return;
 
-        // Create a GSAP timeline
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".sticky", // The container element to trigger the animation
-                start: "top top", // Start animation when the top of the trigger hits the top of the viewport
-                end: "bottom bottom", // End animation when the bottom of the trigger hits the bottom of the viewport
-                scrub: true, // Smoothly animate based on scroll position
-                markers: true, // Add markers for debugging (remove in production)
-            },
-        });
+    gsap.registerPlugin(ScrollTrigger);
 
-        // First animation: Move the camera forward into the palace
-        tl.to(
-            cameraRef.current.position,
-            {
-                z: -500, // Move the camera forward
-                duration: 2, // Duration of the animation (in scroll distance)
-                onUpdate: () => {
-                    console.log(
-                        "Camera Position (Forward):",
-                        cameraRef.current.position
-                    );
-                },
-            },
-            0 // Start at the beginning of the timeline
-        );
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: scrollContainer.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.5,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          if (self.progress > 0.98) {
+            setTimeout(() => {
+              navigate("/about");
+            }, 500);
+          }
+        },
+      },
+    });
 
-        // Second animation: Rotate the camera to turn around
-        tl.to(
-            cameraRef.current.rotation,
-            {
-                y: Math.PI, // Rotate 180 degrees (π radians)
-                duration: 1, // Duration of the rotation
-                onUpdate: () => {
-                    console.log(
-                        "Camera Rotation (Turnaround):",
-                        cameraRef.current.rotation
-                    );
-                },
-            },
-            "+=0.5" // Add a small delay after the first animation
-        );
+    tl.to(cameraRef.current.position, {
+      z: -100,
+      duration: 0.4,
+    })
+      .to(cameraRef.current.rotation, {
+        y: Math.PI,
+        duration: 0.3,
+      })
+      .to(cameraRef.current.position, {
+        z: 300,
+        duration: 0.3,
+      });
 
-        // Third animation: Move the camera backward to exit the palace
-        tl.to(
-            cameraRef.current.position,
-            {
-                z: 0, // Move the camera back to its original position
-                duration: 2, // Duration of the animation
-                onUpdate: () => {
-                    console.log(
-                        "Camera Position (Backward):",
-                        cameraRef.current.position
-                    );
-                },
-            },
-            "+=0.5" // Add a small delay after the second animation
-        );
-    }, []);
+    return () => {
+      tl.kill();
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, [scrollContainer, navigate]);
 
-    return null; // This component doesn't render anything
+  return null;
 };
 
 export default CameraAnimation;

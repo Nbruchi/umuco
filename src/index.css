@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+@layer utilities {
+  .title {
+    @apply font-black opacity-0;
+    transform: translate3d(10px, 51px, -60px) rotateY(60deg) rotateX(-40deg);
+    transform-origin: 50% 50% -150px !important;
+    will-change: opacity, transform;
+  }
+}

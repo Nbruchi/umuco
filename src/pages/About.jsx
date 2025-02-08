@@ -1,5 +1,11 @@
+import Title from "../components/Title";
+
 const About = () => {
-    return <div>About</div>;
+  return (
+    <div className="relative size-full">
+      <Title title="About" />
+    </div>
+  );
 };
 
 export default About;
