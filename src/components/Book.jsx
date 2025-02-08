@@ -91,7 +91,7 @@ const Book = () => {
         <>
             <div
                 ref={bookRef}
-                className="cursor-pointer w-32 h-10 bg-amber-900 rounded-lg shadow-lg p-2 hover:scale-105 transition-transform"
+                className="cursor-pointer w-32 h-28 bg-amber-900 rounded-lg shadow-lg p-2 hover:scale-105 transition-transform"
                 onClick={handleBookClick}
             >
                 <p className="text-sm font-bold text-center text-white animate-bounce">
