@@ -1,9 +1,7 @@
 import { useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 
 const Book = () => {
-    const navigate = useNavigate();
     const bookRef = useRef(null);
     const overlayRef = useRef(null);
 
@@ -44,8 +42,7 @@ const Book = () => {
 
         // Navigation after animation
         setTimeout(() => {
-            console.log("Navigating to about page");
-            navigate("/about");
+            window.location.href = "http://10.12.73.109:7860/";
         }, 2000);
     };
 
@@ -91,10 +88,10 @@ const Book = () => {
         <>
             <div
                 ref={bookRef}
-                className="cursor-pointer w-32 h-28 bg-amber-900 rounded-lg shadow-lg p-2 hover:scale-105 transition-transform"
+                className="cursor-pointer w-32 h-28 bg-amber-900 rounded-lg shadow-lg p-2 hover:scale-105 transition-transform flex items-center justify-center"
                 onClick={handleBookClick}
             >
-                <p className="text-sm font-bold text-center text-white animate-bounce">
+                <p className="text-sm font-bold text-white animate-bounce">
                     Gacurabwenge
                 </p>
             </div>

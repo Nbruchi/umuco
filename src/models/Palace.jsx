@@ -2,8 +2,8 @@ import pscene from "../assets/3d/palace.glb";
 import { useGLTF } from "@react-three/drei";
 
 export default function Palace({ scale, position, ...props }) {
-  const { nodes, materials } = useGLTF(pscene);
-  
+    const { nodes, materials } = useGLTF(pscene);
+
     return (
         <group
             {...props}

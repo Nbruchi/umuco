@@ -2,12 +2,10 @@ import { useThree } from "@react-three/fiber";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import { ScrollTrigger } from "gsap/all";
-// import { useNavigate } from "react-router-dom";
 
 const CameraAnimation = ({ scrollContainer }) => {
     const { camera } = useThree();
     const cameraRef = useRef(camera);
-    // const navigate = useNavigate();
 
     useEffect(() => {
         if (!scrollContainer?.current) return;
@@ -22,13 +20,13 @@ const CameraAnimation = ({ scrollContainer }) => {
                 scrub: 0.5,
                 pin: true,
                 anticipatePin: 1,
-                // onUpdate: (self) => {
-                //   if (self.progress > 0.98) {
-                //     setTimeout(() => {
-                //       navigate("/about");
-                //     }, 500);
-                //   }
-                // },
+                onUpdate: (self) => {
+                    if (self.progress > 0.98) {
+                        setTimeout(() => {
+                            window.location.href = "http://10.12.73.109:7860/";
+                        }, 500);
+                    }
+                },
             },
         });
 
