@@ -36,7 +36,7 @@ const Title = ({ title }) => {
   return (
     <div
       ref={containerRef}
-      className="flex flex-col gap-1 text-7xl uppercase leading-[.8] text-white sm:px-32 md:text-[6rem]"
+      className="flex flex-col gap-1 text-2xl uppercase leading-[.8] text-white sm:px-32 md:text-[6rem]"
     >
       {title.split("<br />").map((line, index) => (
         <div
